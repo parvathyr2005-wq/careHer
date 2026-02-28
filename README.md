@@ -66,7 +66,8 @@ Each user interacts with a **custom dashboard** tailored to their role.
 2. **Server Side / Backend:** Firebase handles authentication, role management, and database queries.
 3. **Database:** Firestore stores user profiles, job postings, applications, and anonymous reports.
 
-<img width="1912" height="867" alt="image" src="https://github.com/user-attachments/assets/a023589a-68d7-40b9-9f3d-4e40099f3230" />
+![WhatsApp Image 2026-02-28 at 8 21 28 AM](https://github.com/user-attachments/assets/c5d97a72-de1b-4167-8e49-f2b97987178d)
+
 This is the system architecture of the project
 
 
