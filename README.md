@@ -1,6 +1,6 @@
 ### **Project Description – careHer**
 
-**Project Name:** careHer – Safe Career Platform for Women
+**Project Name:** careHer – Caring HER through building a CAREER
 ### **Developed By**
 
 Team : Allied Minds
@@ -431,10 +431,21 @@ Fast global content delivery
 
 Seamless integration with Firebase services
 
-<img width="1918" height="931" alt="image" src="https://github.com/user-attachments/assets/a33b5c7f-085a-4c89-b486-96b323240fc7" /> Landing page
-<img width="1872" height="867" alt="image" src="https://github.com/user-attachments/assets/7c25d684-f9c9-4f54-8fe6-d4096a3d0a06" /> Jobs page
-<img width="1898" height="902" alt="image" src="https://github.com/user-attachments/assets/0ab9c949-1144-4fc4-b88a-35f953468044" /> Login Page
-<img width="1912" height="867" alt="image" src="https://github.com/user-attachments/assets/e1f8ad02-de5a-4fb3-8127-93f77ff1ddac" /> Login by an Employer
+<img width="1918" height="931" alt="image" src="https://github.com/user-attachments/assets/a33b5c7f-085a-4c89-b486-96b323240fc7" /> 
+Home page
+<img width="1872" height="867" alt="image" src="https://github.com/user-attachments/assets/7c25d684-f9c9-4f54-8fe6-d4096a3d0a06" /> 
+Jobs page
+<img width="1898" height="902" alt="image" src="https://github.com/user-attachments/assets/0ab9c949-1144-4fc4-b88a-35f953468044" /> 
+Login Page
+<img width="1912" height="867" alt="image" src="https://github.com/user-attachments/assets/e1f8ad02-de5a-4fb3-8127-93f77ff1ddac" /> 
+Login by an Employer
+<img width="1830" height="883" alt="image" src="https://github.com/user-attachments/assets/fb6422df-4786-4758-8477-4833951edbd6" />
+Course page(video courses)
+<img width="1815" height="881" alt="image" src="https://github.com/user-attachments/assets/b95dea60-27e6-46b8-b710-6f9a43729579" />
+Create New Profile
+<img width="1805" height="873" alt="image" src="https://github.com/user-attachments/assets/4cdc2c5b-6b37-42a6-ab02-d2445e868bc6" />
+About Page 
+These are some of the web pages of careHer
 
 DEPLOYMENT LINK
 https://care-her-five.vercel.app
