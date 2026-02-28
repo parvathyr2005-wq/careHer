@@ -431,6 +431,10 @@ Fast global content delivery
 
 Seamless integration with Firebase services
 
+FIGMA DESIGN 
+<img width="1077" height="782" alt="image" src="https://github.com/user-attachments/assets/2f82b32c-29e0-4d3b-8446-1a6a92049ac8" />
+
+ACTUAL WEBSITE
 <img width="1918" height="931" alt="image" src="https://github.com/user-attachments/assets/a33b5c7f-085a-4c89-b486-96b323240fc7" /> 
 Home page
 <img width="1872" height="867" alt="image" src="https://github.com/user-attachments/assets/7c25d684-f9c9-4f54-8fe6-d4096a3d0a06" /> 
