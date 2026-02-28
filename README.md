@@ -453,7 +453,7 @@ These are some of the web pages of careHer
 
 DEPLOYMENT LINK
 
-https://care-mi2c2wf2g-parvathyr2005-wqs-projects.vercel.app/
+https://care-d3vm0ysqn-parvathyr2005-wqs-projects.vercel.app/
 
 LIVE LINK WORK(VIDEO)
 
