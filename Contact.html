@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | careHer</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFE4EC;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: #FFF5F8;
+        }
+
+        /* Logo */
+        .logo-container {
+            position: relative;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .logo .care {
+            color: #4A6CF7;
+        }
+
+        .logo .her {
+            color: #FF4F81;
+        }
+
+        .tagline {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            background-color: white;
+            color: #4A6CF7;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+            opacity: 0;
+            transition: 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .logo-container:hover .tagline {
+            opacity: 1;
+        }
+
+        /* Navigation */
+        nav a {
+            text-decoration: none;
+            margin-left: 25px;
+            color: #444;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #4A6CF7;
+        }
+
+        /* Active Page */
+        nav a.active {
+            color: #4A6CF7;
+            font-weight: 600;
+        }
+
+        /* Main Section */
+        .hero {
+            flex: 1;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 650px;
+            margin: 0 auto;
+        }
+
+        .hero-logo {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-logo .care {
+            color: #4A6CF7;
+        }
+
+        .hero-logo .her {
+            color: #FF4F81;
+        }
+
+        .motto {
+            color: #FF4F81;
+            font-style: italic;
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+
+        .hero h1 {
+            font-size: 26px;
+            color: #4A6CF7;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #444;
+        }
+
+        /* Social Section */
+        .social-title {
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .social-icons {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .social-icons a {
+            margin: 0 15px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+        }
+
+        /* Email */
+        .email {
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .email a {
+            color: #FF4F81;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .email a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #FFF5F8;
+            padding: 12px 0;
+            font-size: 12px;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <span class="care">care</span><span class="her">Her</span>
+            </div>
+            <div class="tagline">Caring her through building a career</div>
+        </div>
+
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="jobs.html">Jobs</a>
+            <a href="contact.html" class="active">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+
+            <div class="hero-logo">
+                <span class="care">care</span><span class="her">Her</span>
+            </div>
+
+            <div class="motto">
+                Caring her through building a career
+            </div>
+
+            <h1>Connect With Us</h1>
+
+            <p>
+                Whether you need help with job applications, employer verification,
+                workplace safety concerns, or career guidance — our team is always
+                here to support you. At careHer, your growth and safety come first.
+            </p>
+
+            <div class="social-title">
+                Reach us on
+            </div>
+
+            <div class="social-icons">
+                <a href="https://www.facebook.com/" target="_blank">
+                    <i class="fab fa-facebook" style="color:#1877F2;"></i>
+                </a>
+
+                <a href="https://www.linkedin.com/" target="_blank">
+                    <i class="fab fa-linkedin" style="color:#0A66C2;"></i>
+                </a>
+
+                <a href="https://www.instagram.com/" target="_blank">
+                    <i class="fab fa-instagram" style="color:#E4405F;"></i>
+                </a>
+
+                <a href="https://twitter.com/" target="_blank">
+                    <i class="fab fa-x-twitter" style="color:#000;"></i>
+                </a>
+            </div>
+
+            <div class="email">
+                Email us directly at <br>
+                <a href="mailto:support@careher.com">support@careher.com</a>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        © 2026 careHer | Designed with care for women empowerment
+    </footer>
+
+</body>
+
+</html>

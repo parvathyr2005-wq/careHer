@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>careHer | Career Hub</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f5f7ff;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 60px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: 700;
+            color: #4A6CF7;
+        }
+
+        .logo span {
+            color: #ff4da6;
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        /* PAGE TITLE */
+        .page-header {
+            padding: 40px 60px 20px;
+        }
+
+        .page-header h1 {
+            color: #4A6CF7;
+        }
+
+        /* CARD GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 60px;
+        }
+
+        /* CAREER PATH CARDS */
+        .path-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .path-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .path-card i {
+            font-size: 30px;
+            color: #4A6CF7;
+            margin-bottom: 10px;
+        }
+
+        /* JOB CARDS */
+        .job-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-card h3 {
+            margin: 0;
+            color: #4A6CF7;
+        }
+
+        .badge {
+            background: #ff4da6;
+            color: white;
+            padding: 3px 8px;
+            font-size: 12px;
+            border-radius: 5px;
+        }
+
+        .safety {
+            color: green;
+            font-weight: 600;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-primary {
+            background: #4A6CF7;
+            color: white;
+        }
+
+        .btn-light {
+            background: #eee;
+        }
+
+        /* COURSE CARDS */
+        .course-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        /* FOOTER */
+        footer {
+            background: #4A6CF7;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .social-icons a {
+            color: white;
+            margin: 0 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header class="navbar">
+        <div class="logo">care<span>Her</span></div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </header>
+
+    <section class="page-header">
+        <h2>Featured Verified Jobs</h2>
+    </section>
+
+    <div class="grid" id="jobContainer">
+        <!-- Jobs will load dynamically here -->
+    </div>
+    <div class="path-card"><i class="fa-solid fa-graduation-cap"></i>
+        <h3>Internships</h3>
+        <p>Gain practical experience.</p>
+    </div>
+    <div class="path-card"><i class="fa-solid fa-building"></i>
+        <h3>Placement Support</h3>
+        <p>College & training placements.</p>
+    </div>
+    <div class="path-card"><i class="fa-solid fa-certificate"></i>
+        <h3>Certification Courses</h3>
+        <p>Boost your resume with credentials.</p>
+    </div>
+    <div class="path-card"><i class="fa-solid fa-house"></i>
+        <h3>Work From Home</h3>
+        <p>Flexible remote opportunities.</p>
+    </div>
+    <div class="path-card"><i class="fa-solid fa-briefcase"></i>
+        <h3>Experienced Roles</h3>
+        <p>Advance your professional career.</p>
+    </div>
+    </div>
+
+    <!-- Featured Jobs -->
+    <section class="page-header">
+        <h2>Featured Verified Jobs</h2>
+    </section>
+
+    <div class="grid">
+        <div class="job-card">
+            <h3>Digital Marketing Executive <span class="badge">Verified</span></h3>
+            <p>Bangalore | Full-Time</p>
+            <p class="safety">Women Safety Score: ⭐⭐⭐⭐ (4.2/5)</p>
+            <button class="btn btn-primary">Apply Securely</button>
+            <button class="btn btn-light">View Reviews</button>
+        </div>
+
+        <div class="job-card">
+            <h3>Online Tutor <span class="badge">Verified</span></h3>
+            <p>Remote | Part-Time</p>
+            <p class="safety">Women Safety Score: ⭐⭐⭐⭐⭐ (4.6/5)</p>
+            <button class="btn btn-primary">Apply Securely</button>
+            <button class="btn btn-light">View Reviews</button>
+        </div>
+    </div>
+
+    <!-- Certification Courses -->
+    <section class="page-header">
+        <h2>Skill & Certification Courses</h2>
+    </section>
+
+    <div class="grid">
+        <div class="course-card">
+            <h3>Resume Building Certification</h3>
+            <p>Professional resume writing skills.</p>
+            <button class="btn btn-primary">Learn More</button>
+        </div>
+
+        <div class="course-card">
+            <h3>Interview Mastery Program</h3>
+            <p>Build confidence for job interviews.</p>
+            <button class="btn btn-primary">Learn More</button>
+        </div>
+
+        <div class="course-card">
+            <h3>Digital Marketing Starter</h3>
+            <p>Beginner-friendly marketing course.</p>
+            <button class="btn btn-primary">Learn More</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-x-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <p>© 2026 careHer | Empowering Women Safely</p>
+    </footer>
+    <script type="module">
+        import { db, auth } from "./firebase.js";
+        import { collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+
+        const jobContainer = document.getElementById("jobContainer");
+
+        async function loadJobs() {
+            const querySnapshot = await getDocs(collection(db, "jobs"));
+
+            jobContainer.innerHTML = "";
+
+            querySnapshot.forEach((docSnap) => {
+                const job = docSnap.data();
+
+                jobContainer.innerHTML += `
+            <div class="job-card">
+                <h3>${job.title} <span class="badge">Verified</span></h3>
+                <p>${job.location} | ${job.type}</p>
+                <p class="safety">Women Safety Score: ⭐⭐⭐⭐ (4.3/5)</p>
+                <p>${job.description}</p>
+                <button class="btn btn-primary" onclick="applyJob('${docSnap.id}')">
+                    Apply Securely
+                </button>
+            </div>
+        `;
+            });
+        }
+
+        window.applyJob = async function (jobId) {
+
+            const user = auth.currentUser;
+
+            if (!user) {
+                alert("Please login to apply.");
+                window.location.href = "login.html";
+                return;
+            }
+
+            await addDoc(collection(db, "applications"), {
+                jobId: jobId,
+                applicantId: user.uid,
+                appliedAt: new Date(),
+                status: "Pending"
+            });
+
+            alert("Application submitted successfully 💜");
+        };
+
+        loadJobs();
+    </script>
+</body>
+
+</html>

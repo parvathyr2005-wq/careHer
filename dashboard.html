@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Dashboard - careHer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard {
+            padding: 40px;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .profile-summary {
+            background: #f5f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .strength-bar {
+            background: #ddd;
+            height: 8px;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .strength-fill {
+            height: 8px;
+            background: #4A6CF7;
+            border-radius: 5px;
+        }
+
+        .job-card {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .job-card h4 {
+            margin-bottom: 8px;
+        }
+
+        .job-card p {
+            margin: 5px 0;
+        }
+
+        .btn-primary {
+            background: #4A6CF7;
+            color: white;
+            padding: 6px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .btn-primary:hover {
+            background: #3a5ce0;
+        }
+
+        .logout-btn {
+            margin-top: 30px;
+            background: #ff4f81;
+        }
+
+        .section-box {
+            margin-top: 30px;
+            padding: 15px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .no-jobs {
+            margin-top: 20px;
+            color: #777;
+            font-style: italic;
+        }
+
+        .safety-score {
+            color: #ff4f81;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <section class="dashboard">
+
+        <h2 id="welcome"></h2>
+        <p id="motivation" style="color:#666; margin-bottom:20px;"></p>
+
+        <!-- Profile Strength -->
+        <div>
+            <strong>Profile Strength:</strong>
+            <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+            </div>
+            <small style="color:#777;">Complete your profile to increase job visibility</small>
+        </div>
+
+        <!-- Profile Summary -->
+        <div id="profileInfo" class="profile-summary"></div>
+
+        <!-- Recommended Jobs -->
+        <h3>Recommended Jobs For You 💼</h3>
+        <div id="jobResults"></div>
+
+        <!-- Application Tracker -->
+        <div class="section-box">
+            <h3>Your Applications 📄</h3>
+            <a href="applications.html">
+                <button class="btn-primary">View Application Tracker</button>
+            </a>
+        </div>
+
+        <!-- Anonymous Reporting -->
+        <div class="section-box">
+            <h3>Your Safety Matters 💜</h3>
+            <p style="color:#666;">
+                Facing workplace issues? You can report safely and anonymously.
+            </p>
+            <a href="report.html">
+                <button class="btn-primary">🚨 Submit Anonymous Report</button>
+            </a>
+        </div>
+
+        <!-- Skill Growth -->
+        <div class="section-box">
+            <h3>Grow Your Skills 🌱</h3>
+            <p style="color:#666;">
+                Improve your career chances with certifications and internships.
+            </p>
+            <a href="jobs.html">
+                <button class="btn-primary">Explore Courses</button>
+            </a>
+        </div>
+
+        <button class="btn-primary logout-btn" onclick="logout()">Logout</button>
+
+    </section>
+
+    <script>
+
+        const jobs = [
+            { title: "Remote Content Writer", category: "creative", workType: "remote", safety: 4.5 },
+            { title: "Craft Designer", category: "crafts", workType: "onsite", safety: 4.2 },
+            { title: "Data Entry Operator", category: "typing", workType: "remote", safety: 4.0 },
+            { title: "Frontend Developer", category: "it", workType: "hybrid", safety: 4.6 }
+        ];
+
+        const profile = JSON.parse(localStorage.getItem("careHerProfile"));
+
+        if (profile) {
+
+            // Welcome Message
+            document.getElementById("welcome").innerText =
+                "Welcome back, " + profile.name + " 👋";
+
+            // Motivational Message
+            const messages = [
+                "You are capable of amazing things 💜",
+                "Your career journey matters ✨",
+                "We are here to support your growth 🚀"
+            ];
+
+            document.getElementById("motivation").innerText =
+                messages[Math.floor(Math.random() * messages.length)];
+
+            // Profile Strength Calculation
+            let strength = 40;
+
+            if (profile.interest) strength += 20;
+            if (profile.workType) strength += 20;
+
+            document.getElementById("strengthFill").style.width = strength + "%";
+
+            // Profile Summary
+            document.getElementById("profileInfo").innerHTML = `
+        <strong>Your Interest:</strong> ${profile.interest} <br>
+        <strong>Preferred Work Type:</strong> ${profile.workType || "Any"}
+    `;
+
+            // Filter Jobs
+            const matchedJobs = jobs.filter(job =>
+                job.category === profile.interest &&
+                (profile.workType === "" || job.workType === profile.workType)
+            );
+
+            const container = document.getElementById("jobResults");
+
+            if (matchedJobs.length === 0) {
+                container.innerHTML = `
+            <div class="no-jobs">
+                No exact matches found. Try updating your interest to explore more opportunities 💜
+            </div>
+        `;
+            } else {
+                matchedJobs.forEach(job => {
+                    container.innerHTML += `
+                <div class="job-card">
+                    <h4>${job.title}</h4>
+                    <p>Matched with your interest in <strong>${profile.interest}</strong></p>
+                    <p>Work Type: ${job.workType}</p>
+                    <p class="safety-score">💜 CareHer Safety Score: ${job.safety} / 5</p>
+                    <button class="btn-primary">Apply Now</button>
+                    <button class="btn-primary" onclick="saveJob('${job.title}')">Save Job 💜</button>
+                </div>
+            `;
+                });
+            }
+
+        } else {
+            document.getElementById("welcome").innerText =
+                "Profile not found. Please create your profile first.";
+        }
+
+        // Save Job Function
+        function saveJob(title) {
+            let savedJobs = JSON.parse(localStorage.getItem("savedJobs")) || [];
+            savedJobs.push(title);
+            localStorage.setItem("savedJobs", JSON.stringify(savedJobs));
+            alert("Job saved successfully 💜");
+        }
+
+        // Logout
+        function logout() {
+            window.location.href = "login.html";
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Login - careHer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .role-switch {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .role-switch button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            background: #eee;
+        }
+
+        .role-switch button.active {
+            background: #4A6CF7;
+            color: white;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .auth-container {
+            margin-top: 120px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header class="navbar">
+        <a href="index.html" class="logo">
+            care<span>Her</span>
+        </a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="jobs.html">Jobs</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.html" class="login-btn">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- LOGIN SECTION -->
+    <div class="auth-container">
+
+        <div class="auth-left">
+            <h1>care<span>Her</span></h1>
+            <p>
+                Empowering Women.<br>
+                Protecting Privacy.<br>
+                Building Careers.
+            </p>
+        </div>
+
+        <div class="auth-right">
+            <div class="auth-card">
+
+                <h2>Welcome Back</h2>
+                <p class="auth-subtitle">Login as Job Seeker or Employer</p>
+
+                <!-- Role Switch -->
+                <div class="role-switch">
+                    <button id="jobBtn" class="active" onclick="switchRole('job')">Job Seeker</button>
+                    <button id="empBtn" onclick="switchRole('emp')">Employer</button>
+                </div>
+
+                <!-- Job Seeker Login -->
+                <div id="jobLogin">
+                    <input type="email" id="jobUsername" placeholder="Email">
+                    <input type="password" id="jobPassword" placeholder="Password">
+                    <button onclick="loginUser('jobseeker')" class="btn-primary">
+                        Login as Job Seeker
+                    </button>
+                    <p class="auth-footer">
+                        New here?
+                        <a href="create-profile.html">Create Profile</a>
+                    </p>
+                </div>
+
+                <!-- Employer Login -->
+                <div id="empLogin" class="hidden">
+                    <input type="email" id="empUsername" placeholder="Company Email">
+                    <input type="password" id="empPassword" placeholder="Password">
+                    <button onclick="loginUser('employer')" class="btn-primary">
+                        Login as Employer
+                    </button>
+                    <p class="auth-footer">
+                        New Employer?
+                        <a href="employer-register.html">Register Company</a>
+                    </p>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { signInWithEmailAndPassword, signOut }
+            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+        import { doc, getDoc }
+            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+        // Role Switch
+        window.switchRole = function (role) {
+            const jobBtn = document.getElementById("jobBtn");
+            const empBtn = document.getElementById("empBtn");
+            const jobLogin = document.getElementById("jobLogin");
+            const empLogin = document.getElementById("empLogin");
+
+            if (role === "job") {
+                jobLogin.classList.remove("hidden");
+                empLogin.classList.add("hidden");
+                jobBtn.classList.add("active");
+                empBtn.classList.remove("active");
+            } else {
+                empLogin.classList.remove("hidden");
+                jobLogin.classList.add("hidden");
+                empBtn.classList.add("active");
+                jobBtn.classList.remove("active");
+            }
+        };
+
+        // 🔥 ONE SMART LOGIN FUNCTION
+        window.loginUser = async function (expectedRole) {
+
+            let email, password;
+
+            if (expectedRole === "employer") {
+                email = document.getElementById("empUsername").value;
+                password = document.getElementById("empPassword").value;
+            } else {
+                email = document.getElementById("jobUsername").value;
+                password = document.getElementById("jobPassword").value;
+            }
+
+            try {
+                const userCredential =
+                    await signInWithEmailAndPassword(auth, email, password);
+
+                const user = userCredential.user;
+
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+
+                if (!docSnap.exists()) {
+                    alert("User record not found.");
+                    await signOut(auth);
+                    return;
+                }
+
+                const role = docSnap.data().role;
+                console.log("Stored role:", role);
+                console.log("Expected role:", expectedRole);
+                // ✅ Correct role check
+                if (role !== expectedRole) {
+                    alert("You are not authorized for this login type.");
+                    await signOut(auth);
+                    return;
+                }
+
+                // ✅ Correct redirect
+                if (role === "employer") {
+                    window.location.href = "employer-dashboard.html";
+                }
+                else if (role === "jobseeker") {
+                    window.location.href = "jobseeker-dashboard.html";
+                }
+
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+
+    </script>
+
+</body>
+
+</html>

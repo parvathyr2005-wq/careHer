@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employer Registration - careHer</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .safety-box {
+            background: #fff5f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .checkbox-group {
+            margin-top: 10px;
+        }
+
+        .checkbox-group input {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-left">
+            <h1>care<span>Her</span></h1>
+            <p>
+                Creating Safe Workplaces<br>
+                for Women Professionals
+            </p>
+        </div>
+
+        <div class="auth-right">
+            <div class="auth-card">
+
+                <h2>Employer Registration</h2>
+                <p class="auth-subtitle">Post verified jobs for women</p>
+
+                <input type="text" id="companyName" placeholder="Company Name" required>
+                <input type="email" id="companyEmail" placeholder="Official Email" required>
+                <input type="text" id="companyPhone" placeholder="Contact Number" required>
+                <input type="text" id="industry" placeholder="Industry Type" required>
+                <input type="text" id="location" placeholder="Company Location" required>
+                <input type="password" id="password" placeholder="Create Password" required>
+
+                <div class="safety-box">
+                    <strong>Women Safety Commitment:</strong>
+                    <p>
+                        By registering, your company agrees to provide a safe,
+                        harassment-free workplace and comply with women safety policies.
+                    </p>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="safetyCheck">
+                        <label for="safetyCheck">
+                            I confirm that my organization follows workplace safety
+                            and anti-harassment standards.
+                        </label>
+                    </div>
+                </div>
+
+                <button onclick="registerEmployer()" class="btn-primary">
+                    Register Company
+                </button>
+
+                <p class="auth-footer">
+                    Already registered?
+                    <a href="login.html">Login here</a>
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+        window.registerEmployer = async function () {
+
+            const name = document.getElementById("companyName").value;
+            const email = document.getElementById("companyEmail").value;
+            const phone = document.getElementById("companyPhone").value;
+            const industry = document.getElementById("industry").value;
+            const location = document.getElementById("location").value;
+            const password = document.getElementById("password").value;
+            const safetyCheck = document.getElementById("safetyCheck").checked;
+
+            if (!safetyCheck) {
+                alert("You must agree to the Women Safety Commitment to register.");
+                return;
+            }
+
+            try {
+                // Create user in Firebase Authentication
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Store employer details in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    role: "employer",
+                    companyName: name,
+                    email: email,
+                    phone: phone,
+                    industry: industry,
+                    location: location,
+                    createdAt: new Date()
+                });
+
+                alert("Company Registered Successfully!");
+                window.location.href = "login.html";
+
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+    </script>
+</body>
+
+</html>

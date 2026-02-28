@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Create Profile - careHer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <section class="profile-form">
+        <h2>Create Your Safe Career Profile</h2>
+
+        <input type="text" id="name" placeholder="Your Name">
+
+        <input type="text" id="username" placeholder="Create Username">
+
+        <input type="password" id="password" placeholder="Create Password">
+
+        <select id="qualification">
+            <option value="">Qualification</option>
+            <option value="12th">12th Pass</option>
+            <option value="graduate">Graduate</option>
+            <option value="postgraduate">Postgraduate</option>
+        </select>
+
+        <input type="text" id="skills" placeholder="Your Skills (e.g., Typing, Design, Coding)">
+
+        <select id="interest">
+            <option value="">Area of Interest</option>
+            <option value="creative">Creative</option>
+            <option value="crafts">Crafts</option>
+            <option value="typing">Typing</option>
+            <option value="it">IT</option>
+        </select>
+
+        <select id="workType">
+            <option value="">Work Preference</option>
+            <option value="remote">Remote</option>
+            <option value="onsite">Onsite</option>
+            <option value="hybrid">Hybrid</option>
+        </select>
+
+        <select id="safety">
+            <option value="">Safety Preference</option>
+            <option value="remoteOnly">Remote Only</option>
+            <option value="verifiedOnly">Verified Employers Only</option>
+        </select>
+
+        <button onclick="createProfile()" class="btn-primary">
+            Create My Profile
+        </button>
+    </section>
+
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { createUserWithEmailAndPassword }
+            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+        import { setDoc, doc }
+            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+        window.createProfile = async function () {
+
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("username").value; // using username as email
+            const password = document.getElementById("password").value;
+            const qualification = document.getElementById("qualification").value;
+            const skills = document.getElementById("skills").value;
+            const interest = document.getElementById("interest").value;
+            const workType = document.getElementById("workType").value;
+            const safety = document.getElementById("safety").value;
+
+            if (!name || !email || !password) {
+                alert("Please fill required fields.");
+                return;
+            }
+
+            try {
+
+                // Create user in Firebase Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Save profile in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    role: "jobseeker",   // 🔥 ADD THIS LINE
+                    name,
+                    email,
+                    qualification,
+                    skills,
+                    interest,
+                    workType,
+                    safety,
+                    createdAt: new Date()
+                });
+
+                alert("Profile Created Successfully!");
+                window.location.href = "jobs.html";
+
+            } catch (error) {
+                alert(error.message);
+            }
+        };
+    </script>
+</body>
+
+</html>

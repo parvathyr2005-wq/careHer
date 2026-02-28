@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Employer Dashboard - careHer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+        <h2>Employer Dashboard 👩‍💼</h2>
+
+        <h3>Post a New Job</h3>
+
+        <input type="text" id="jobTitle" placeholder="Job Title"><br><br>
+        <input type="text" id="jobLocation" placeholder="Location"><br><br>
+
+        <select id="jobType">
+            <option value="remote">Remote</option>
+            <option value="onsite">Onsite</option>
+            <option value="hybrid">Hybrid</option>
+        </select><br><br>
+
+        <textarea id="jobDescription" placeholder="Job Description"></textarea><br><br>
+
+        <button onclick="postJob()" class="btn-primary">Post Job</button>
+
+        <hr>
+
+        <h3>Your Posted Jobs</h3>
+        <div id="jobList"></div>
+
+        <h3>Applications Received</h3>
+        <div id="applicationList"></div>
+
+        <br>
+        <button onclick="logout()" class="btn-primary">Logout</button>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase.js";
+        import { signOut, onAuthStateChanged }
+            from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js";
+        import {
+            collection,
+            addDoc,
+            query,
+            where,
+            getDocs,
+            doc,
+            getDoc,
+            updateDoc
+        } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js";
+
+        let currentUser;
+
+        // 🔐 Auth Check
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUser = user;
+                loadJobs();
+                loadApplications();
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // 📝 Post Job
+        window.postJob = async function () {
+
+            const title = document.getElementById("jobTitle").value;
+            const location = document.getElementById("jobLocation").value;
+            const type = document.getElementById("jobType").value;
+            const description = document.getElementById("jobDescription").value;
+
+            if (!title || !location || !description) {
+                alert("Please fill all fields");
+                return;
+            }
+
+            await addDoc(collection(db, "jobs"), {
+                employerId: currentUser.uid,
+                title: title,
+                location: location,
+                type: type,
+                description: description,
+                createdAt: new Date()
+            });
+
+            alert("Job Posted Successfully!");
+
+            document.getElementById("jobTitle").value = "";
+            document.getElementById("jobLocation").value = "";
+            document.getElementById("jobDescription").value = "";
+
+            loadJobs();
+        };
+
+        // 📌 Load Employer Jobs
+        async function loadJobs() {
+
+            const jobList = document.getElementById("jobList");
+            jobList.innerHTML = "";
+
+            const q = query(
+                collection(db, "jobs"),
+                where("employerId", "==", currentUser.uid)
+            );
+
+            const querySnapshot = await getDocs(q);
+
+            querySnapshot.forEach((docSnap) => {
+
+                const job = docSnap.data();
+
+                jobList.innerHTML += `
+            <div style="border:1px solid #ddd; padding:10px; margin:10px 0;">
+                <h4>${job.title}</h4>
+                <p>${job.location} | ${job.type}</p>
+                <p>${job.description}</p>
+            </div>
+        `;
+            });
+        }
+
+        // 📥 Load Applications For Employer's Jobs
+        async function loadApplications() {
+
+            const appList = document.getElementById("applicationList");
+            appList.innerHTML = "";
+
+            // 1️⃣ Get employer jobs
+            const jobsQuery = query(
+                collection(db, "jobs"),
+                where("employerId", "==", currentUser.uid)
+            );
+
+            const jobsSnapshot = await getDocs(jobsQuery);
+
+            let employerJobIds = [];
+
+            jobsSnapshot.forEach((jobDoc) => {
+                employerJobIds.push(jobDoc.id);
+            });
+
+            if (employerJobIds.length === 0) {
+                appList.innerHTML = "<p>No applications yet.</p>";
+                return;
+            }
+
+            // 2️⃣ Get applications
+            const applicationsSnapshot = await getDocs(collection(db, "applications"));
+
+            for (const document of applicationsSnapshot.docs) {
+
+                const app = document.data();
+                const appId = document.id;
+
+                if (!employerJobIds.includes(app.jobId)) continue;
+
+                // Get Job Title
+                const jobRef = doc(db, "jobs", app.jobId);
+                const jobSnap = await getDoc(jobRef);
+
+                let jobTitle = "Unknown Job";
+                if (jobSnap.exists()) {
+                    jobTitle = jobSnap.data().title;
+                }
+
+                const status = app.status || "Pending";
+
+                appList.innerHTML += `
+            <div style="border:1px solid #ddd; padding:10px; margin:10px 0;">
+                <h4>${jobTitle}</h4>
+                <p><strong>Applicant ID:</strong> ${app.applicantId}</p>
+                <p><strong>Status:</strong> ${status}</p>
+                <button onclick="approve('${appId}')">Approve</button>
+                <button onclick="reject('${appId}')">Reject</button>
+            </div>
+        `;
+            }
+        }
+
+        // ✅ Approve
+        window.approve = async function (appId) {
+
+            await updateDoc(doc(db, "applications", appId), {
+                status: "Approved"
+            });
+
+            alert("Application Approved");
+            loadApplications();
+        };
+
+        // ❌ Reject
+        window.reject = async function (appId) {
+
+            await updateDoc(doc(db, "applications", appId), {
+                status: "Rejected"
+            });
+
+            alert("Application Rejected");
+            loadApplications();
+        };
+
+        // 🚪 Logout
+        window.logout = async function () {
+            await signOut(auth);
+            window.location.href = "login.html";
+        };
+    </script>
+
+</body>
+
+</html>
